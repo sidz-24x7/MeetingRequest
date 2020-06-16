@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Request Meeting {% endblock title %}
+{% block optionalCSS %}
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .container {
+    max-width: 960px;
+  }
+
+  .lh-condensed {
+    line-height: 1.25;
+  }
+</style>
+{% endblock optionalCSS %}
+{% block bodyContent %}
+
+<body class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>New Meeting Request</h2>
+      <p class="lead">Please fill the form below to request for a meeting with DGH officials</p>
+    </div>
+
+    <div class="row justify-content-center">
+
+
+
+      <div class="col-md-8 order-md-1 card">
+        <div class="card-body">
+          <h4 class="mb-3">Personal Details</h4>
+          <form class="needs-validation" novalidate action="{% url 'submitted' %}">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="username">Purpose/Subject</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="username" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email">Email <span class="text-muted">(Official)</span></label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">Contact Number</label>
+              <input type="text" class="form-control" id="address" placeholder="Mobile Number" required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <label for="address2">Verify Pattern</label>
+            <div class="row">
+              <img src="{% static 'img/CaptchaImage.jpg' %}" class="col-md-3">
+              <input type="text" class="form-control col-md-5 ml-3" id="captcha" placeholder="Enter the sum">
+              <button class="btn btn-primary btn-md btn-block ml-3 col-md-3" type="button" id="verifyCaptcha">Verify</button>
+
+            </div>
+
+            <hr class="mb-4">
+            <div id="meetingDetails" style="display: none;">
+              <h4 class="mb-3">Meeting Details</h4>
+
+              <div class="mb-3">
+                <label for="">Requested Official</label>
+                <select class="form-control" id="requestedOffical" required>
+                  <option value="">Choose...</option>
+                  <option>DG - DGH</option>
+                  <option>ADG (Development)</option>
+                  <option>ADG (Exploration)</option>
+                  <option>Chief Technical Officer to DG</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="">Date</label>
+                  <input type="date" class="form-control" id="captcha" placeholder="Select Date">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="">Time</label>
+                  <input type="time" class="form-control" id="captcha" placeholder="Select Time">
+                </div>
+              </div>
+              <hr class="mb-4">
+              <div class="container">
+                <div class="row">
+                  <div class="col text-center">
+                    <button class="btn btn-primary" id="submitRequest" type="submit">Submit Request</button>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; DGH</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+  </footer>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="alertModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Alert</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Incorrect Captcha! Please try again</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $("#verifyCaptcha").click(function () {
+        if ("25" == $("#captcha").val()) {
+          $(this).removeClass("btn-primary").addClass("btn-success").html("Verified").attr("disabled", "true");
+          $("#meetingDetails").show();
+        } else {
+          $("#alertModal").modal('show');
+        }
+      });
+    });
+  </script>
+  {% endblock bodyContent %}
