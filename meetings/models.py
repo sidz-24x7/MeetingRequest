@@ -15,7 +15,8 @@ class Meetings(models.Model):
     date_time = models.DateTimeField(verbose_name="Proposed Date & Time")
     created_at = models.DateTimeField(auto_now_add=True)
     requested_official = models.ForeignKey(
-        'Employee', on_delete=models.SET_NULL, verbose_name="Official", null=True)
+        'Employee', on_delete=models.SET_NULL, verbose_name="Official", 
+        null=True)
 
     def __str__(self):
         return self.id
