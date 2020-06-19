@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %} Request Meeting {% endblock title %}
 {% block optionalCSS %}
 <style>
@@ -42,6 +43,7 @@
 
       <div class="col-md-8 order-md-1 card">
         <div class="card-body">
+          {{ form|crispy }}
           <h4 class="mb-3">Personal Details</h4>
           <form class="needs-validation" novalidate action="{% url 'submitted' %}">
             <div class="row">
