@@ -6,4 +6,4 @@ class RequestNewMeeting(ModelForm):
     class Meta:
         model = Meetings
         fields = ['subject', 'company', 'name', 'email',
-                  'contact_no', 'date_time', 'requested_official']
+                  'contact_no', 'requested_official']
