@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .forms import RequestNewMeeting
+from .forms import MeetingRequest
 # Create your views here.
 
 
 def request_new(request):
-    form = RequestNewMeeting()
+    form = MeetingRequest()
     return render(request, 'request_new.html', {'form': form})
 
 
