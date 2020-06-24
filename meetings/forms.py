@@ -17,3 +17,7 @@ class MeetingRequest(forms.Form):
     duration2 = forms.IntegerField(label="Proposed Duration(minutes) - Option 2", required=False)
     date_time3 = forms.DateTimeField(label="Proposed Date & Time - Option 3", required=False)
     duration3 = forms.IntegerField(label="Proposed Duration(minutes) - Option 3", required=False)
+
+
+class OTPCaptchaVerification(forms.Form):
+    captcha_for_otp = CaptchaField()
