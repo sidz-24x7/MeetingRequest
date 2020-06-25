@@ -20,4 +20,4 @@ class MeetingRequest(forms.Form):
 
 
 class OTPCaptchaVerification(forms.Form):
-    captcha_for_otp = CaptchaField()
+    captcha = CaptchaField()

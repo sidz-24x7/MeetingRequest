@@ -37,83 +37,105 @@
       <p class="lead">Please fill the form below to request for a meeting with DGH officials</p>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="accordion" id="meetingRequestAccordion">
+    <div class="inner-wrapper mt-auto mb-auto container">
+      <div class="row justify-content-between">
+        <div class="shadow-lg col-12 mx-3 mb-3 px-md-5 py-md-4 px-3 py-2 card font-weight-normal">
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="mt-2">Personal Details</h3>
+            </div>
 
-        <div class="card">
-
-          <div class="card-header" id="personalDetailsHeader">
-            <h3 class="mb-0">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#personalDetails"
-                aria-expanded="true" aria-controls="personalDetails" disabled>
-                <h5>Personal Details</h5>
-              </button>
-            </h3>
+            <div class="col-md-6">
+              <h3 class="mt-2">Meeting Details</h3>
+            </div>
           </div>
 
-          <div id="personalDetails" class="collapse show" aria-labelledby="personalDetailsHeader"
-            data-parent="#meetingRequestAccordion">
-            <div class="card-body">
-              <form class="needs-validation" novalidate action="{% url 'submitted' %}">
+          <form id="queryForm" method="post" action="/PENDINGISSUE/Raise/RequestOTP" class="mb-3 needs-validation" novalidate="">
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
                 <div class="row">
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-6">
                     {{ form.first_name | as_crispy_field }}
                   </div>
                   <div class="invalid-feedback">
                     Valid first name is required
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-6">
                     {{ form.last_name | as_crispy_field }}
                     <div class="invalid-feedback">
                       Valid last name is required
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div class="mb-3">
-                  {{ form.company | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Please enter a valid company
-                  </div>
+              <div class="ml-4 form-group col-md-5">
+                {{ form.subject | as_crispy_field }}
+                <div class="invalid-feedback">
+                  Please enter a valid company
                 </div>
-
-                <div class="mb-3">
-                  {{ form.designation | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Please enter a valid designation
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  {{ form.email | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Please enter a valid email address
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  {{ form.contact_no | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Please enter your contact number
-                  </div>
-                </div>
-                <br>
-
-                <div class="mb-3">
-                  <div class="form-inline">
-                    {{ captcha_form.captcha_for_otp }}
-                    <img src="{% static 'img/captcha_reload.png' %}" height="39px" class="ml-1" title="Reload Captcha">
-                    <button class="btn btn-primary ml-auto" type="button" id="verifyCaptcha">Request OTP</button>
-                    <div class="invalid-feedback">
-                      Please enter your shipping address.
-                    </div>
-                  </div>
-                </div>
+              </div>
             </div>
-          </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                {{ form.company | as_crispy_field }}
+                <div class="invalid-feedback">
+                  Please enter a valid company
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                {{ form.designation | as_crispy_field }}
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                {{ form.email | as_crispy_field }}
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                {{ form.contact_no | as_crispy_field }}
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+
+                <div class="form-inline">
+                  {{ form.captcha }}
+                  <img src="{% static 'img/captcha_reload.png' %}" height="39px" title="Reload Captcha" class="ml-1">
+                  <button class="btn btn-danger ml-auto" type="button" id="verifyCaptcha">Generate</button>
+                  <div class="invalid-feedback">
+                    Please enter your shipping address.
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
+
+            <!--<div class="form-row" id="loadingBar">
+              <div class="col-md-6">
+                Please wait...
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
+                  </div>
+                </div>
+              </div>
+            </div>-->
+            <div class="form-row text-danger">
+              *OTP will be sent to your official email ID and is valid for one time use only within 24 hours from request.
+            </div>
+          </form>
         </div>
+
       </div>
     </div>
 
@@ -126,7 +148,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id=modalBodyContent>
             <p>Incorrect Captcha! Please try again</p>
           </div>
           <div class="modal-footer">
@@ -142,12 +164,35 @@
   </div>
   <script>
     $(document).ready(function () {
-      $("#{{ captcha_form.captcha_for_otp.id_for_label }}").addClass('form-control ml-1').attr('placeholder', 'Enter Text in Image');
+      $("#{{ form.captcha.id_for_label }}").attr('size', '15').addClass('form-control ml-1').attr('placeholder', 'Enter Text in Image');
       $("#verifyCaptcha").click(function () {
+        var formUrl = "{% url 'verify_captcha' %}";
         var formData = new FormData();
-        formData.set('captcha_for_otp_0', $("#captcha_for_otp_0").val());
-        formData.append('captcha_for_otp_1', $("#captcha_for_otp_0").val());
-        console.log(formData);
+        formData.set('captcha_0', $("#id_captcha_0").val());
+        formData.append('captcha_1', $("#id_captcha_1").val());
+        $.ajax({
+          url: formUrl,
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (result) {
+            if ('1' == result['status']) {
+              $('#modalBodyContent').html('OTP has been sent to your email ID.<br> Please enter OTP to continue');
+            } else {
+              $('#modalBodyContent').html(result);
+            }
+          },
+          error: function () {
+            $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed. Please refresh captcha to continue</div > ');
+          },
+          fail: function (xhr, textStatus, errorThrown) {
+            $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed with error: ' + errorThrown + '</div > ');
+          },
+          complete: function () {
+            $('#overlay').fadeOut();
+          }
+        });
         if ("25" == $("#captcha").val()) {
           $(this).removeClass("btn-primary").addClass("btn-success").html("Verified").attr("disabled", "true");
           $("#meetingDetails").show();
