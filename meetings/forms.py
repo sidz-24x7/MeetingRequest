@@ -1,5 +1,6 @@
 from django import forms
 from captcha.fields import CaptchaField
+from .models import Employee
 
 
 class MeetingRequest(forms.Form):
@@ -11,12 +12,13 @@ class MeetingRequest(forms.Form):
     contact_no = forms.IntegerField(max_value=9999999999, label="Contact Number", widget=forms.NumberInput(attrs={'placeholder': 'Enter mobile number'}))
     captcha = CaptchaField()
     subject = forms.CharField(label='Purpose/Subject', max_length=500)
-    date_time1 = forms.DateTimeField(label="Proposed Date & Time - Option 1")
-    duration1 = forms.IntegerField(label="Proposed Duration(minutes) - Option 1")
-    date_time2 = forms.DateTimeField(label="Proposed Date & Time - Option 2", required=False)
-    duration2 = forms.IntegerField(label="Proposed Duration(minutes) - Option 2", required=False)
-    date_time3 = forms.DateTimeField(label="Proposed Date & Time - Option 3", required=False)
-    duration3 = forms.IntegerField(label="Proposed Duration(minutes) - Option 3", required=False)
+    requested_official = forms.ModelChoiceField(queryset=Employee.objects.all().order_by('order_number'), empty_label='Select Official', label="Requested Official")
+    date_time1 = forms.DateTimeField(label="Option 1 : Date & Time")
+    duration1 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}))
+    date_time2 = forms.DateTimeField(label="Option 2 : Date & Time", required=False)
+    duration2 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}), required=False)
+    date_time3 = forms.DateTimeField(label="Option 3 : Date & Time", required=False)
+    duration3 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}), required=False)
 
 
 class OTPCaptchaVerification(forms.Form):
