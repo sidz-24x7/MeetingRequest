@@ -3,6 +3,8 @@
 {% load crispy_forms_tags %}
 {% block title %} Request Meeting {% endblock title %}
 {% block optionalCSS %}
+<!-- Gijgo CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;
@@ -26,30 +28,45 @@
   .lh-condensed {
     line-height: 1.25;
   }
+
+  .asteriskField {
+    color: red;
+  }
+
+  .meetingDetails {
+    display: {{ display }};
+  }
 </style>
 {% endblock optionalCSS %}
+
+{% block optionalJS %}
+<!-- Gijgo, jQuery Validation JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js" type="text/javascript"></script>
+{% endblock optionalJS %}
+
 {% block bodyContent %}
 <div class="container">
-  <div class="py-5 text-center">
-    <h2 style="margin-top: 2rem;" class="text-white">New Meeting Request</h2>
+  <div class="py-4 text-center">
+    <h2>New Meeting Request</h2>
     <p class="lead">Please fill the form below to request for a meeting with DGH officials</p>
   </div>
 
   <div class="inner-wrapper mt-auto mb-auto container">
     <div class="row justify-content-between">
       <div class="shadow-lg col-12 mx-3 mb-3 px-md-5 py-md-4 px-3 py-2 card font-weight-normal">
-
         <div class="row">
           <div class="col-md-6">
             <h3 class="mt-2">Personal Details</h3>
           </div>
 
-          <div class="ml-auto col-md-5">
+          <div class="ml-auto col-md-5 meetingDetails">
             <h3 class="mt-2">Meeting Details</h3>
           </div>
         </div>
 
-        <form id="queryForm" method="post" action="" class="mb-3 needs-validation" novalidate="">
+        <form id="meetingRequestForm" method="post" action="{% url 'request' %}" class="mb-3 needs-validation">
+          {% csrf_token %}
 
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -57,39 +74,24 @@
                 <div class="col-md-6">
                   {{ form.first_name | as_crispy_field }}
                 </div>
-                <div class="invalid-feedback">
-                  Valid first name is required
-                </div>
                 <div class="col-md-6">
                   {{ form.last_name | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Valid last name is required
-                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="ml-auto form-group col-md-5">
+            <div class="ml-auto form-group col-md-5 meetingDetails">
               {{ form.subject | as_crispy_field }}
-              <div class="invalid-feedback">
-                Please enter a valid company
-              </div>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
               {{ form.company | as_crispy_field }}
-              <div class="invalid-feedback">
-                Please enter a valid company
-              </div>
             </div>
 
-            <div class="ml-auto form-group col-md-5">
+            <div class="ml-auto form-group col-md-5 meetingDetails">
               {{ form.requested_official | as_crispy_field }}
-              <div class="invalid-feedback">
-                Please enter a valid company
-              </div>
             </div>
           </div>
 
@@ -98,19 +100,13 @@
               {{ form.designation | as_crispy_field }}
             </div>
 
-            <div class="ml-auto form-group col-md-5">
+            <div class="ml-auto form-group col-md-5 meetingDetails">
               <div class="row">
                 <div class="col-md-8">
                   {{ form.date_time1 | as_crispy_field }}
                 </div>
-                <div class="invalid-feedback">
-                  Valid first name is required
-                </div>
                 <div class="col-md-4">
                   {{ form.duration1 | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Valid last name is required
-                  </div>
                 </div>
               </div>
             </div>
@@ -121,19 +117,13 @@
               {{ form.email | as_crispy_field }}
             </div>
 
-            <div class="ml-auto form-group col-md-5">
+            <div class="ml-auto form-group col-md-5 meetingDetails">
               <div class="row">
                 <div class="col-md-8">
                   {{ form.date_time2 | as_crispy_field }}
                 </div>
-                <div class="invalid-feedback">
-                  Valid first name is required
-                </div>
                 <div class="col-md-4">
                   {{ form.duration2 | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Valid last name is required
-                  </div>
                 </div>
               </div>
             </div>
@@ -144,19 +134,13 @@
               {{ form.contact_no | as_crispy_field }}
             </div>
 
-            <div class="ml-auto form-group col-md-5">
+            <div class="ml-auto form-group col-md-5 meetingDetails">
               <div class="row">
                 <div class="col-md-8">
                   {{ form.date_time3 | as_crispy_field }}
                 </div>
-                <div class="invalid-feedback">
-                  Valid first name is required
-                </div>
                 <div class="col-md-4">
                   {{ form.duration3 | as_crispy_field }}
-                  <div class="invalid-feedback">
-                    Valid last name is required
-                  </div>
                 </div>
               </div>
             </div>
@@ -164,20 +148,20 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-
               <div class="form-inline">
                 {{ form.captcha }}
-                <img src="{% static 'img/captcha_reload.png' %}" height="39px" title="Reload Captcha" class="ml-1">
-                <button class="btn btn-danger ml-auto" type="button" id="verifyCaptcha">Generate</button>
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
-                </div>
+                <img src="{% static 'img/captcha_reload.png' %}" height="39px" title="Reload Captcha" class="ml-1" id="reloadCaptcha">
+                <button class="btn btn-danger ml-auto personalDetails" type="button" id="verifyCaptcha">Request OTP</button>
+              </div>
+            </div>
+
+            <div class="ml-auto form-group col-md-5 meetingDetails">
+              <div class="form-inline">
+                {{ form.otp| as_crispy_field }}
+                <button class="btn btn-success ml-auto" type="submit" id="submitForm">Submit Request</button>
               </div>
             </div>
           </div>
-
-
-
           <!--<div class="form-row" id="loadingBar">
               <div class="col-md-6">
                 Please wait...
@@ -187,9 +171,8 @@
                 </div>
               </div>
             </div>-->
-          <div class="form-row text-danger">
-            *OTP will be sent to your official email ID and is valid for one time use only within 24 hours from
-            request.
+          <div class="form-row text-warning">
+            *OTP will be sent to your official email ID and is valid for one time use only.
           </div>
         </form>
       </div>
@@ -211,53 +194,235 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary meetingDetails" id="submitOTP">Submit</button>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="my-5 pt-5 text-muted text-center text-small">
+  <footer class="text-center text-small">
     <p class="mb-1">&copy; DGH</p>
   </footer>
 </div>
+{% endblock bodyContent %}
+
+{% block optionalScript %}
 <script>
   $(document).ready(function () {
-    $("#{{ form.captcha.id_for_label }}").attr('size', '15').addClass('form-control ml-1').attr('placeholder', 'Enter Text in Image');
-    $("#verifyCaptcha").click(function () {
-      var formUrl = "{% url 'verify_captcha' %}";
-      var formData = new FormData();
-      formData.set('captcha_0', $("#id_captcha_0").val());
-      formData.append('captcha_1', $("#id_captcha_1").val());
-      $.ajax({
-        url: formUrl,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (result) {
-          if ('1' == result['status']) {
-            $('#modalBodyContent').html('OTP has been sent to your email ID.<br> Please enter OTP to continue');
-          } else {
-            $('#modalBodyContent').html(result);
-          }
-        },
-        error: function () {
-          $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed. Please refresh captcha to continue</div > ');
-        },
-        fail: function (xhr, textStatus, errorThrown) {
-          $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed with error: ' + errorThrown + '</div > ');
-        },
-        complete: function () {
-          $('#overlay').fadeOut();
-        }
+    //Adding DateTimePicker for date inputs
+    $('.datetimeinput').each(function () {
+      $(this).datetimepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'dd-mm-yyyy HH:MM',
+        modal: true,
+        footer: true
       });
-      if ("25" == $("#captcha").val()) {
-        $(this).removeClass("btn-primary").addClass("btn-success").html("Verified").attr("disabled", "true");
-        $("#meetingDetails").show();
-      } else {
-        $("#alertModal").modal();
+    });
+    // Adding BootStrap UI for captcha field
+    $("#{{ form.captcha.id_for_label }}").attr('size', '10').addClass('form-control ml-2 personalDetails').attr('placeholder', 'Image Text');
+
+    // Universal function to refresh captcha
+    function captchaRefresh() {
+      $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+      });
+      $("#{{ form.captcha.id_for_label }}").removeClass("is-valid");
+    }
+
+    // Adding AJAX refresh of captcha image on reload image click
+    $('body').on('click', '#reloadCaptcha', function () {
+      if (!$("#{{ form.captcha.id_for_label }}").is('[disabled=disabled]')) {
+        captchaRefresh();
       }
     });
+
+    // Custom validators for jQuery Validation
+    $.validator.addMethod("australianDate", function (value, element) {
+      // RegEx Match
+      return value.match(/^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$|^$/);
+    },
+      "Please enter a date in the format dd-MM-yyyy."
+    );
+
+    //jQuery Validation on the form
+    var v = $("#meetingRequestForm").validate({
+      rules: {
+        '{{ form.first_name.html_name }}': {
+          required: true,
+          minlength: 1,
+          maxlength: 50
+        },
+        '{{ form.last_name.html_name }}': {
+          required: true,
+          minlength: 2,
+          maxlength: 50
+        },
+        '{{ form.company.html_name }}': {
+          required: true,
+          minlength: 2,
+          maxlength: 100
+        },
+        '{{ form.designation.html_name }}': {
+          required: true,
+          minlength: 2,
+          maxlength: 200
+        },
+        '{{ form.email.html_name }}': {
+          required: true,
+          email: true
+        },
+        '{{ form.contact_no.html_name }}': {
+          required: true,
+          digits: true,
+          minlength: 10,
+          maxlength: 10
+        },
+        'captcha_1': {
+          required: true,
+          minlength: 4,
+          maxlength: 4
+        },
+        '{{ form.subject.html_name }}': {
+          required: true,
+          minlength: 5,
+          maxlength: 500
+        },
+        '{{ form.requested_official.html_name }}': {
+          required: true,
+        },
+        '{{ form.date_time1.html_name }}': {
+          required: true,
+        },
+        '{{ form.duration1.html_name }}': {
+          required: true,
+          digits: true,
+          minlength: 1,
+          maxlength: 3
+        },
+        '{{ form.date_time2.html_name }}': {
+          required: false,
+        },
+        '{{ form.duration2.html_name }}': {
+          required: function (element) {
+            return $("#{{ form.date_time2.id_for_label }}").val() != '';
+          },
+          digits: true,
+          minlength: 1,
+          maxlength: 3
+        },
+        '{{ form.date_time3.html_name }}': {
+          required: false,
+        },
+        '{{ form.duration3.html_name }}': {
+          required: function (element) {
+            return $("#{{ form.date_time3.id_for_label }}").val() != '';
+          },
+          digits: true,
+          minlength: 1,
+          maxlength: 3
+        }
+      },
+      messages: {
+        '{{ form.first_name.html_name }}': {
+          required: "Required"
+        },
+        '{{ form.last.html_name }}': {
+          required: "Required"
+        }
+      },
+      errorClass: 'invalid-feedback',
+      validClass: 'valid-feedback',
+      errorElement: 'div',
+      errorPlacement: function (error, element) {
+        error.insertAfter(element.parent('div'));
+      },
+      highlight: function (element) {
+        $(element).removeClass("is-valid").addClass("is-invalid");
+      },
+      unhighlight: function (element) {
+        $(element).removeClass("is-invalid").addClass("is-valid");
+      }
+    });
+
+    $("#submitOTP").click(function () {
+      if ($("#otpModal").length) {
+        var otpValue = $("#otpModal").val();
+        if (otpValue.length == 6 && /^\d+$/.test(otpValue)) {
+          $("#otpModal-error").css("display", "none");
+          $("#otpModal").removeClass("is-invalid");
+          $("#{{ form.otp.id_for_label }}").val($("#otpModal").val());
+          $("#alertModal").modal('hide');
+        } else {
+          $("#otpModal-error").css("display", "block");
+          $("#otpModal").addClass("is-invalid");
+        }
+      }
+    });
+    // Captcha verification & subsequent tasks
+    $("#verifyCaptcha").click(function () {
+      if (v.form()) {
+        var formUrl = "{% url 'verify_captcha' %}";
+        var formData = new FormData();
+        formData.set('captcha_0', $("#id_captcha_0").val());
+        formData.append('captcha_1', $("#id_captcha_1").val());
+        $.ajax({
+          url: formUrl,
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (result) {
+            if ('1' == result['status']) {
+              $(".personalDetails").attr('disabled', 'disabled');
+              $("#verifyCaptcha").removeClass("btn-danger").addClass("btn-secondary disabled").html("Verified");
+              $(".meetingDetails").css('opacity', 0)
+                .slideDown('slow')
+                .animate(
+                  { opacity: 1 },
+                  { queue: false, duration: 'slow' }
+                );
+              $('#modalBodyContent').html('<div class="alert alert-success" role="alert">OTP has been sent on your email</div><br> \
+              <div class="form-inline"> \
+              <div class= "form-group" > \
+              <label for="otpModal">Please enter OTP</label> \
+              <input type="text" maxlength="6" id="otpModal" class="form-control mx-sm-3"> \
+              <div id="otpModal-error" class="invalid-feedback" style="display: none;">Invalid OTP</div> \
+              </div ></div > ');
+            } else if ('0' == result['status']) {
+              $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Invalid Captcha! Please enter correct text as per image</div>');
+              $('.captcha').attr('src', result['new_captcha_image']);
+              $('#id_captcha_0').val(result['new_captcha_key']);
+              $("#{{ form.captcha.id_for_label }}").removeClass("is-valid");
+            }
+          },
+          error: function () {
+            $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed. Please retry</div >');
+            captchaRefresh();
+          },
+          fail: function (xhr, textStatus, errorThrown) {
+            $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Request Failed with error: ' + errorThrown + '</div > ');
+            captchaRefresh();
+          },
+          complete: function () {
+            $('#overlay').fadeOut();
+            $("#alertModal").modal('show');
+          }
+        });
+      } else {
+        return;
+      }
+    });
+
+    $("#meetingRequestForm").submit(function (e){
+      e.preventDefault(); // avoid to execute the actual submit of the form.
+
+      var form = $(this);
+      var url = form.attr('action');
+
+      console.log(form.serialize());
+    });
+
   });
 </script>
-{% endblock bodyContent %}
+{% endblock optionalScript %}

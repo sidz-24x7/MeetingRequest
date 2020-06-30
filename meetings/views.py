@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.core.exceptions import SuspiciousOperation
-from django.http import HttpResponse
+from django.http import HttpResponse  # , HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
@@ -10,8 +10,24 @@ from .forms import MeetingRequest, OTPCaptchaVerification
 
 
 def request_new(request):
-    form = MeetingRequest()
-    return render(request, 'request_new.html', {'form': form})
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = MeetingRequest(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponse("Success")
+            # return HttpResponseRedirect('/status/')
+        display = "block"
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        display = "none"
+        form = MeetingRequest()
+
+    return render(request, 'request_new.html', {'form': form, 'display': display})
 
 
 @csrf_exempt
