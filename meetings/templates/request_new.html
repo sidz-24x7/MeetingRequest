@@ -33,7 +33,7 @@
     color: red;
   }
 
-  .meetingDetails {
+.meetingDetails {
     display: {{ display }};
   }
 </style>
@@ -65,7 +65,7 @@
           </div>
         </div>
 
-        <form id="meetingRequestForm" method="post" action="{% url 'request' %}" class="mb-3 needs-validation">
+        <form id="meetingRequestForm" method="post" action="{% url 'request' %}" class="mb-3 needs-validation" onsubmit="$(this).find('input').prop('disabled', false)">
           {% csrf_token %}
 
           <div class="form-row">
@@ -414,14 +414,14 @@
       }
     });
 
-    $("#meetingRequestForm").submit(function (e){
+    /*$("#meetingRequestForm").submit(function (e){
       e.preventDefault(); // avoid to execute the actual submit of the form.
 
       var form = $(this);
       var url = form.attr('action');
 
       console.log(form.serialize());
-    });
+    });*/
 
   });
 </script>
