@@ -219,7 +219,7 @@
       });
     });
     // Adding BootStrap UI for captcha field
-    $("#{{ form.captcha.id_for_label }}").attr('size', '10').addClass('form-control ml-2 personalDetails').attr('placeholder', 'Image Text');
+    $("#{{ form.captcha.id_for_label }}").attr('size', '10').addClass('form-control ml-2').attr('placeholder', 'Image Text');
 
     // Universal function to refresh captcha
     function captchaRefresh() {
@@ -374,8 +374,11 @@
           processData: false,
           success: function (result) {
             if ('1' == result['status']) {
+              $('.captcha').attr('src', result['new_captcha_image']);
+              $('#id_captcha_0').val(result['new_captcha_key']);
+              $("#{{ form.captcha.id_for_label }}").val('').removeClass("is-valid");
               $(".personalDetails").attr('disabled', 'disabled');
-              $("#verifyCaptcha").removeClass("btn-danger").addClass("btn-secondary disabled").html("Verified");
+              $("#verifyCaptcha").fadeOut().remove();
               $(".meetingDetails").css('opacity', 0)
                 .slideDown('slow')
                 .animate(
@@ -385,15 +388,16 @@
               $('#modalBodyContent').html('<div class="alert alert-success" role="alert">OTP has been sent on your email</div><br> \
               <div class="form-inline"> \
               <div class= "form-group" > \
+              <form> \
               <label for="otpModal">Please enter OTP</label> \
               <input type="text" maxlength="6" id="otpModal" class="form-control mx-sm-3"> \
-              <div id="otpModal-error" class="invalid-feedback" style="display: none;">Invalid OTP</div> \
+              </form>  \
               </div ></div > ');
             } else if ('0' == result['status']) {
               $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Invalid Captcha! Please enter correct text as per image</div>');
               $('.captcha').attr('src', result['new_captcha_image']);
               $('#id_captcha_0').val(result['new_captcha_key']);
-              $("#{{ form.captcha.id_for_label }}").removeClass("is-valid");
+              $("#{{ form.captcha.id_for_label }}").val('').removeClass("is-valid");
             }
           },
           error: function () {

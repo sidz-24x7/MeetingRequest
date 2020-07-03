@@ -40,6 +40,7 @@ def verify_captcha(request):
 
             to_json_response['new_captcha_key'] = CaptchaStore.generate_key()
             to_json_response['new_captcha_image'] = captcha_image_url(to_json_response['new_captcha_key'])
+
         else:
             to_json_response['status'] = 0
             to_json_response['form_errors'] = form.errors
