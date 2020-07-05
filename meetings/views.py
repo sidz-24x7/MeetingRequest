@@ -1,4 +1,6 @@
 import json
+import random
+from datetime import date, datetime
 from django.shortcuts import render
 from django.core.exceptions import SuspiciousOperation
 from django.http import HttpResponse  # , HttpResponseRedirect
@@ -6,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from .forms import MeetingRequest, OTPCaptchaVerification
+from .models import Meetings, Employee
 # Create your views here.
 
 
@@ -17,6 +20,16 @@ def request_new(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            id = "MEET/"
+            meeting = Meetings(subject=form.cleaned_data['subject'], company=form.cleaned_data['company'],
+                               designation=form.cleaned_data['designation'], name=form.cleaned_data['first_name'] + form.cleaned_data['last_name'],
+                               email=form.cleaned_data['email'], contact_no=form.cleaned_data['contact_no'], date_time1=form.cleaned_data['date_time1'],
+                               duration1=form.cleaned_data['duration1'], date_time2=form.cleaned_data['date_time2'], duration2=form.cleaned_data['duration2'],
+                               date_time3=form.cleaned_data['date_time2'], duration3=form.cleaned_data['duration2'],
+                               requested_official=form.cleaned_data['requested_official'])
+            id = "MEET/"+meeting.date_time1.strftime("%d-%m-%Y")+random.randint(1, 30)
+            meeting.id = id
+            meeting.save()
             # ...
             # redirect to a new URL:
             return HttpResponse("Success")

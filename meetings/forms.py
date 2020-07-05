@@ -15,9 +15,9 @@ class MeetingRequest(forms.Form):
     requested_official = forms.ModelChoiceField(queryset=Employee.objects.all().order_by('order_number'), empty_label='Select Official', label="Requested Official")
     date_time1 = forms.DateTimeField(label="Option 1 : Date & Time", input_formats=['%d-%m-%Y %H:%M'])
     duration1 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}))
-    date_time2 = forms.DateTimeField(label="Option 2 : Date & Time", required=False)
+    date_time2 = forms.DateTimeField(label="Option 2 : Date & Time", required=False, input_formats=['%d-%m-%Y %H:%M'])
     duration2 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}), required=False)
-    date_time3 = forms.DateTimeField(label="Option 3 : Date & Time", required=False)
+    date_time3 = forms.DateTimeField(label="Option 3 : Date & Time", required=False, input_formats=['%d-%m-%Y %H:%M'])
     duration3 = forms.IntegerField(label="Duration", widget=forms.NumberInput(attrs={'placeholder': 'Minutes'}), required=False)
     otp = forms.CharField(label="OTP", max_length=6, widget=forms.TextInput(attrs={'placeholder': 'Enter OTP', 'size': '6', 'class': 'ml-2'}))
 
