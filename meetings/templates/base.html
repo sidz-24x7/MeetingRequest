@@ -38,7 +38,9 @@
 
 </head>
 
+{% block mainBody%}
 <body class="page-bg">
+{% block navbar %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <img id="dghLogo" src="{% static "img/logo_dgh1_psd.png" %}" alt="DGH Logo" height="40">
     <a class="navbar-brand" href="#">
@@ -52,10 +54,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   </nav>
+  {% endblock navbar %}
 
   {% block bodyContent %}
   {% endblock bodyContent %}
 
 </body>
+{% endblock mainBody%}
 {% block optionalScript %}
 {% endblock optionalScript %}

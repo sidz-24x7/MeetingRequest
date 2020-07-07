@@ -1,0 +1,497 @@
+/* START --- STYLE-MINIMAL */
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.mw-1600 {
+    max-width: 1600px !important;
+}
+
+.footer {
+    /*position: absolute;*/
+    bottom: 0;
+    width: 100%;
+    /*height: 60px;*/
+    /*line-height: 60px;*/
+    /*background-color: #f5f5f5;*/
+}
+
+.btn {
+    /*border-radius:0;*/
+}
+
+.alert {
+    /*border-radius:0;*/
+}
+
+.badge {
+    /*border-radius:0;*/
+}
+
+.smaller {
+    font-size: 60%;
+    font-weight: 400;
+}
+
+.small-70 {
+    font-size: 70%;
+    font-weight: 400;
+}
+
+.navbar {
+    padding: 0.2rem 2rem;
+}
+
+.navbar-light .navbar-toggler {
+    border: 0px;
+    /*vertical-align: top;*/
+    padding: 0.1rem 0 0.1rem 0;
+}
+
+.content-section {
+    /*margin-top: 5rem;*/
+}
+
+.navbar-toggler-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.container-fluid {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+@media (max-width: 575.98px) {
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .content-section {
+        /*margin-top: 4rem;*/
+    }
+
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .content-section {
+        /*margin-top: 4rem;*/
+    }
+
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media(min-width:992px) {
+    .card-max-xs {
+        max-height: 320px;
+    }
+
+    .card-max-sm {
+        max-height: 420px;
+    }
+
+    .card-max-md {
+        max-height: 640px;
+    }
+
+    .dropdown-menu-lg{
+        min-width: 540px;
+    }
+}
+
+@media(min-width:575px) {
+    .card-max-xs {
+        max-height: 300px;
+    }
+
+    .card-max-sm {
+        max-height: 420px;
+    }
+
+    .dropdown-menu-lg{
+        min-width: 540px;
+    }
+}
+
+
+
+.filler1 {
+    height: 200px;
+    width: 100%;
+}
+
+.filler2 {
+    height: 40px;
+    width: 100%;
+}
+
+.filler3 {
+    height: 100px;
+    width: 100%;
+}
+
+.overlay {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    /*cursor: pointer;*/
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 360px;
+    /*padding: 15px;*/
+    margin: auto;
+}
+
+
+.form-apply {
+    width: 100%;
+    max-width: 360px;
+    /*padding: 15px;*/
+    margin: auto;
+}
+
+.field-validation-error {
+    color: #ff006e;
+}
+
+.validation-summary-errors ul, .validation-summary-errors li {
+    color: #ff006e;
+    list-style: none;
+    display: inline;
+    padding: 0;
+}
+
+.validation-summary-errors {
+    padding-bottom: 16px;
+}
+
+.ui-datepicker-title {
+    color: #000;
+}
+
+.ui-datepicker-calendar a {
+    color: #000;
+}
+
+/*.ui-datepicker .ui-state-disabled span {
+    color: #4b93d2;
+}*/
+
+.lh-1 {
+    line-height: 1;
+}
+
+.lh-80 {
+    line-height: 0.8;
+}
+
+.lh-1-2 {
+    line-height: 1.2;
+}
+
+.font-90 {
+    font-size: 90%;
+    font-weight: 400;
+}
+
+/*.scroll-element.scroll-x {
+    display: none !important;
+}
+
+.scroll-wrapper > .scroll-content {
+    overflow-x: hidden !important;
+}*/
+
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+    padding-bottom: 1em;
+}
+
+.ui-datepicker td[title]::after {
+    content: attr(title);
+    display: block;
+    position: relative;
+    font-size: .7em;
+    height: 1.25em;
+    margin-top: -1.25em;
+    text-align: right;
+    padding-right: 0.9em;
+    color: #cccccc;
+}
+
+.ui-datepicker .ui-state-active {
+    background: #743620 none;
+    color: white;
+}
+
+#companyList_paginate .pagination > li > a, .pagination > li > span {
+    background-color: rgb(245, 198, 203);
+    color: #dc3545;
+}
+
+#companyList_paginate .pagination > li.active > a, .pagination > li.active > span {
+    background-color: #3e295a;
+    border-color: #3e295a;
+    color: #ffffff;
+}
+
+#bookingsList_paginate .pagination > li > a, .pagination > li > span {
+    background-color: rgb(245, 198, 203);
+    color: #dc3545;
+}
+
+#bookingsList_paginate .pagination > li.active > a, .pagination > li.active > span {
+    background-color: #3e295a;
+    border-color: #3e295a;
+    color: #ffffff;
+}
+
+.th-sm th {
+    max-width: 200px;
+}
+
+.modal-fs .modal-dialog {
+    overflow-y: initial !important;
+}
+
+    .modal-fs .modal-dialog .modal-content {
+        height: 95vh;
+    }
+
+    .modal-fs .modal-dialog .modal-body {
+        overflow-y: auto;
+    }
+
+@media (max-width: 575.98px) {
+    .modal-fs .modal-dialog .modal-content {
+        height: 125vh;
+    }
+}
+
+tfoot {
+    display: table-header-group;
+}
+
+    tfoot select {
+        max-width: 200px;
+    }
+
+.numberCircle {
+    display: inline-block;
+    line-height: 0px;
+    border-radius: 50%;
+    /*border:2px solid;*/
+    /*font-size:32px;*/
+}
+
+    .numberCircle span {
+        display: inline-block;
+        padding-top: 50%;
+        padding-bottom: 50%;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+/*.ck.ck-balloon-panel{
+    z-index:2000;
+}*/
+.ck-editor__editable {
+    min-height: 128px !important;
+    max-height: 256px !important;
+}
+
+.taskbutton{
+    cursor:pointer;
+}
+
+.taskbutton:hover{
+    box-shadow:0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.task-completed .badge-pending{
+    background-color:#17a2b8;
+    color:#fff;
+}
+.task-completed .badge-pending::after{
+    content:" WITH OTHERS";
+}
+
+.task-pending .badge-pending::after{
+    content:" FOR ACTION";
+}
+
+#data-process-summary-history p{
+    margin:0;
+}
+
+.row-link{
+    cursor:pointer;
+}
+
+#data-process-summary-history ol { counter-reset: item }
+#data-process-summary-history li{ display: block }
+#data-process-summary-history li:before { content: counters(item, ".") ". "; counter-increment: item }
+
+.dropdown-menu-center {
+    /*right: auto;
+    left: 50%;*/
+    -webkit-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+/* END --- STYLE-MINIMAL */
+
+/* START --- Floating Labels CSS */
+:root {
+  --input-padding-x: .75rem;
+  --input-padding-y: .75rem;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/*body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}*/
+
+/*.form-signin {
+  width: 100%;
+  max-width: 420px;
+  padding: 15px;
+  margin: auto;
+}*/
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group > input,
+.form-label-group > select,
+.form-label-group > label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+/* END --- Floating Labels CSS */

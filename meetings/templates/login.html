@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Login | Meetings {% endblock title %}
+{% block optionalCSS %}
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+
+<link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+<link href="{% static 'css/login.css' %}" rel="stylesheet" />
+{% endblock optionalCSS %}
+{% block navbar %}
+{% endblock navbar %}
+
+{% block mainBody %}
+<body class="page-bg text-center h-100 align-middle d-flex">
+
+    <div class="modal fade" id="helpSupport" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Help and Support</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-left">
+                    <p>
+                        If you have any issues or queries, kindly mail us at the below mentioned email addresses.
+                    </p>
+                    <p>
+                    <div class="small text-uppercase">For techincal issues/queries</div>
+                    <div><a class="" href="mailto:webmaster@dghindia.gov.in">webmaster@dghindia.gov.in</a></div>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form action="/PSCDashboard/login/Authenticate" class="form-signin" method="post">
+        <div class="card p-4 rounded shadow border-0 background-blur">
+            <div class="row">
+                <div class="col-lg-12 d-flex align-items-center">
+                    <fieldset>
+
+                        <img class="mb-4 px-1" src="/PSCDashboard/Content/img/dgh_psc_dashboard_logo_910x100.png" width="300" />
+
+                        <div style="color: #E80C4D; font-size:13px;" class="mb-2">
+
+                        </div>
+
+
+                        <div class="editor-centered">
+                            <div class="form-label-group text-left">
+                                <input class="form-control" data-val="true" data-val-length="The field Username must be a string with a minimum length of 1 and a maximum length of 256."
+                                    data-val-length-max="256" data-val-length-min="1" data-val-required="Username is required" id="UserId" name="UserId" placeholder="Username" type="text" value="" />
+                                <label for="UserId">Username</label>
+                                <div class="editor-label mb-2">
+                                    <span class="field-validation-valid" data-valmsg-for="UserId" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-label-group text-left">
+                                <input class="form-control" data-val="true" data-val-required="Password is required" id="Password" name="Password" placeholder="Password" type="password" />
+                                <label for="Password">Password</label>
+                                <div class="editor-label mb-2">
+                                    <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="editor-label text-left"><img alt="Captcha" src=/PSCDashboard/Login/CaptchaImage /></div>
+                            <div class="form-label-group text-left">
+                                <input autocomplete="off" class="form-control" data-val="true" data-val-required="You are required to add the numbers correctly" id="Captcha" name="Captcha"
+                                    placeholder="Add the numbers" type="text" value="" />
+                                <label for="Captcha">Add the numbers</label>
+                                <div class="editor-label mb-2">
+                                    <span class="field-validation-valid" data-valmsg-for="Captcha" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="submit" id="submit" class="btn btn-large btn-primary btn-block mb-3" value="Login" />
+                            </div>
+                            <div>
+
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a class="font-90" href="/PSCDashboard/login/passwordreset">Forgot Password?</a>
+
+
+                                <a class="font-90" href="#" data-toggle="modal" data-target="#helpSupport">Help and Support</a>
+                            </div>
+                            <div class="d-flex justify-content-between small pt-2 text-danger">
+                                For new registrations, kindly send the name, email, phone no. and designation of nominated official(s) to your respective nodal officer via email.
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="footer mt-4 mb-2">
+            <div class="container">
+                <div class="text-center text-white font-weight-300">&copy; 2019 Directorate General of Hydrocarbons</div>
+            </div>
+        </div>
+        <div class="modal fade" id="browserModal" tabindex="-1" role="dialog" aria-labelledby="browserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel"><i class="fa fa-warning pr-2 text-warning"></i>Unsupported Browser</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-left mb-4 font-weight-300 h5">
+                            It seems you are using an unsupported browser. The application may not work correctly with an unsupported browser.
+                            <br />It is recommended that you use one of the following browsers to view this application.
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-4 text-center">
+                                <a href="https://www.google.com/chrome/" target="_blank">
+                                    <img src="/PSCDashboard/Content/img/chrome.png" style="width:60%;" />
+                                    <br />
+                                    Google Chrome 60+
+                                </a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">
+                                    <img src="/PSCDashboard/Content/img/firefox.png" style="width:60%;" />
+                                    <br />
+                                    Mozilla Firefox 50+
+                                </a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="https://www.microsoft.com/en-in/windows/microsoft-edge" target="_blank">
+                                    <img src="/PSCDashboard/Content/img/edge.png" style="width:60%;" />
+                                    <br />
+                                    Microsoft Edge
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-left font-weight-300 h5 mb-2">If you are already using one of the above browsers you can <a class="text-danger" href="#" data-dismiss="modal">dismiss this
+                                message</a>.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="/PSCDashboard/Content/js/typeahead.bundle.min.js"></script>
+
+
+    <script>
+        if (('Chrome' == "Chrome") && ((parseFloat(('83.0').split(".")[0]) >= 60))) {
+
+        }
+        else if (('Chrome' == "Firefox") && ((parseFloat(('83.0').split(".")[0]) >= 50))) {
+
+        }
+        else {
+            $("#browserModal").modal("show");
+        }
+    </script>
+
+</body>
+
+{% endblock mainBody %}

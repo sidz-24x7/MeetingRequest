@@ -33,7 +33,7 @@
     color: red;
   }
 
-.meetingDetails {
+  .meetingDetails {
     display: {{ display }};
   }
 </style>
@@ -55,6 +55,28 @@
   <div class="inner-wrapper mt-auto mb-auto container">
     <div class="row justify-content-between">
       <div class="shadow-lg col-12 mx-3 mb-3 px-md-5 py-md-4 px-3 py-2 card font-weight-normal">
+        {% if form.errors %}
+
+          {% for field in form %}
+            {% if field.name in error_field_list%}
+              {% for error in field.errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ field.label }} </strong> : {{ error|escape }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+
+          {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+          {% endfor %}
+
+        {% endif%}
+        <div class="row">
+
+        </div>
         <div class="row">
           <div class="col-md-6">
             <h3 class="mt-2">Personal Details</h3>
@@ -151,7 +173,9 @@
               <div class="form-inline">
                 {{ form.captcha }}
                 <img src="{% static 'img/captcha_reload.png' %}" height="39px" title="Reload Captcha" class="ml-1" id="reloadCaptcha">
-                <button class="btn btn-danger ml-auto personalDetails" type="button" id="verifyCaptcha">Request OTP</button>
+                {% if "none" == display %}
+                  <button class="btn btn-danger ml-auto personalDetails" type="button" id="verifyCaptcha">Request OTP</button>
+                {% endif %}
               </div>
             </div>
 
@@ -388,10 +412,9 @@
               $('#modalBodyContent').html('<div class="alert alert-success" role="alert">OTP has been sent on your email</div><br> \
               <div class="form-inline"> \
               <div class= "form-group" > \
-              <form> \
               <label for="otpModal">Please enter OTP</label> \
               <input type="text" maxlength="6" id="otpModal" class="form-control mx-sm-3"> \
-              </form>  \
+              <div id="otpModal-error" class="invalid-feedback" style="display: none;">Invalid OTP! </div> \
               </div ></div > ');
             } else if ('0' == result['status']) {
               $('#modalBodyContent').html('<div class="alert alert-danger" role="alert">Invalid Captcha! Please enter correct text as per image</div>');
