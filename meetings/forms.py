@@ -24,3 +24,9 @@ class MeetingRequest(forms.Form):
 
 class OTPCaptchaVerification(forms.Form):
     captcha = CaptchaField()
+
+
+class Login(forms.Form):
+    username = forms.CharField(label='Username', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Enter Username'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password'}))
+    captcha = CaptchaField()

@@ -6,7 +6,7 @@ from django.http import HttpResponse  # , HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-from .forms import MeetingRequest, OTPCaptchaVerification
+from .forms import MeetingRequest, OTPCaptchaVerification, Login
 from .models import Meetings
 # Create your views here.
 
@@ -82,4 +82,6 @@ def status(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    form = Login()
+    context = {'form': form}
+    return render(request, 'login.html', context)
