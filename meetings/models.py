@@ -4,13 +4,18 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Meetings(models.Model):
+class Meeting(models.Model):
+    SUBMITTED = 1
+    PENDING = 2
+    APPROVED = 3
+    REJECTED = 4
+    EXPIRED = 5
     STATUS = (
-        (1, 'SUBMITTED'),
-        (2, 'PENDING APPROVAL'),
-        (3, 'APPROVED'),
-        (4, 'REJECTED'),
-        (5, 'EXPIRED')
+        (SUBMITTED, 'Submitted'),
+        (PENDING, 'Pending Approval'),
+        (APPROVED, 'Approved'),
+        (REJECTED, 'Rejected'),
+        (EXPIRED, 'Expired/Lapsed')
     )
     id = models.CharField(primary_key=True, max_length=100)
     subject = models.TextField(verbose_name="Purpose/Subject", max_length=500)

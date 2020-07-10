@@ -1,13 +1,12 @@
-import json
-# from datetime import datetime
 from django.shortcuts import render
 from django.core.exceptions import SuspiciousOperation
-from django.http import HttpResponse  # , HttpResponseRedirect
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from .forms import MeetingRequest, OTPCaptchaVerification, Login
-from .models import Meetings
+from .models import Meeting
 # Create your views here.
 
 
@@ -21,26 +20,26 @@ def request_new(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            new_meeting = Meetings(subject=form.cleaned_data['subject'], company=form.cleaned_data['company'],
-                                   designation=form.cleaned_data['designation'], name=form.cleaned_data['first_name'] + form.cleaned_data['last_name'],
-                                   email=form.cleaned_data['email'], contact_no=form.cleaned_data['contact_no'], date_time1=form.cleaned_data['date_time1'],
-                                   duration1=form.cleaned_data['duration1'], date_time2=form.cleaned_data['date_time2'], duration2=form.cleaned_data['duration2'],
-                                   date_time3=form.cleaned_data['date_time2'], duration3=form.cleaned_data['duration2'],
-                                   requested_official=form.cleaned_data['requested_official'])
+            new_meeting = Meeting(subject=form.cleaned_data['subject'], company=form.cleaned_data['company'],
+                                  designation=form.cleaned_data['designation'], name=form.cleaned_data['first_name'] + form.cleaned_data['last_name'],
+                                  email=form.cleaned_data['email'], contact_no=form.cleaned_data['contact_no'], date_time1=form.cleaned_data['date_time1'],
+                                  duration1=form.cleaned_data['duration1'], date_time2=form.cleaned_data['date_time2'], duration2=form.cleaned_data['duration2'],
+                                  date_time3=form.cleaned_data['date_time2'], duration3=form.cleaned_data['duration2'],
+                                  requested_official=form.cleaned_data['requested_official'], status=Meeting.SUBMITTED)
             meeting_count = 1
             meeting_id = "TEST"
             employee_code = form.cleaned_data['requested_official'].designation.code
             while True:
                 meeting_id = "MEET/" + new_meeting.date_time1.strftime("%d-%m-%Y") + "/" + employee_code + "/" + str(meeting_count)
-                if not Meetings.objects.filter(id=meeting_id).exists():
+                if not Meeting.objects.filter(id=meeting_id).exists():
                     break
                 else:
                     meeting_count = meeting_count+1
             new_meeting.id = meeting_id
             new_meeting.save()
-            context['meeting_id'] = meeting_id
-            context['employee_name'] = form.cleaned_data['requested_official'].__str__
-            context['status'] = "Submitted"
+            # Temp MANUAL Context assignment. Pass Meetings Object later
+            context['meeting'] = new_meeting
+            # Temp Manual Code
             # redirect to a new URL:
             return render(request, 'status.html', context)
             # return HttpResponseRedirect('/status/')
@@ -69,19 +68,24 @@ def verify_captcha(request):
         to_json_response['new_captcha_key'] = CaptchaStore.generate_key()
         to_json_response['new_captcha_image'] = captcha_image_url(to_json_response['new_captcha_key'])
 
-        return HttpResponse(json.dumps(to_json_response), content_type='application/json')
+        return JsonResponse(to_json_response)
     else:
         raise SuspiciousOperation
 
 
 def status(request):
     # Temp Code
-    context = {'meeting_id': "MEET/10-07-2020/DG/4", 'employee_name': "Shri S.C.L. DAS, Director General, DGH",
-               'status': "Pending Approval"}
+    context = {'meeting': Meeting.objects.get(id="MEET/10-07-2020/DG/4")}
     return render(request, 'status.html', context)
 
 
 def login(request):
     form = Login()
+    if request.method == "POST":
+        form = Login(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                return HttpResponse("Successfully Authenticated!!")
     context = {'form': form}
     return render(request, 'login.html', context)

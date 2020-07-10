@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %} Meeting Status {% endblock title %}
+{% block title %} Status | Meetings {% endblock title %}
 {% block optionalCSS %}
 <style>
     .bd-placeholder-img {
@@ -44,8 +44,8 @@
             <div class="shadow-lg col-12 mx-3 mb-3 px-md-5 py-md-4 px-3 py-2 card font-weight-normal">
 
                 <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Meeting Status : <i>{{ status }}</i></h4>
-                    <p>Your request number <strong>{{ meeting_id }}</strong> has been forwarded to <i>{{ employee_name }}</i> for approval</p>
+                    <h4 class="alert-heading">Meeting Status : <i>{{ meeting.get_status_display }}</i></h4>
+                    <p>Your request number <strong>{{ meeting.id }}</strong> has been forwarded to <i>{{ meeting.requested_official }}</i> for approval</p>
                     <hr>
                     <p class="mb-0">Please check email for updates.</p>
                 </div>
