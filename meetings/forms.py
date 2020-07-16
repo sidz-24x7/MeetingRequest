@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 from .models import Employee
 
@@ -36,6 +37,11 @@ class Login(forms.Form):
         cleaned_data = super().clean()
         _username = cleaned_data.get("username")
         _password = cleaned_data.get("password")
-        _user = authenticate(username=_username, password=_password)
-        if user is not None:
-            pass
+
+        try:
+            _user_object = User.objects.get(username=_username)
+            _user = authenticate(username=_username, password=_password)
+            if _user is None:
+                self.add_error("password", "Invalid Password")
+        except User.DoesNotExist:
+            self.add_error("username", "Invalid Username")

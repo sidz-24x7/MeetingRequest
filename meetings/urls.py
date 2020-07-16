@@ -4,6 +4,6 @@ from . import views
 urlpatterns = [
     path('request/', views.request_new, name="request"),
     path('status/', views.status, name="status"),
-    path('login/', views.login, name='login'),
+    path('login/', views.login_user, name='login_user'),
     path('verifycaptcha/', views.verify_captcha, name="verify_captcha")
 ]
