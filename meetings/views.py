@@ -99,3 +99,7 @@ def login_user(request):
             print("Valid Form")
     context = {'form': form}
     return render(request, 'login.html', context)
+
+
+def manage(request):
+    return render(request, 'manage.html')
