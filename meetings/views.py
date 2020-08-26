@@ -1,12 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.exceptions import SuspiciousOperation
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse  # , HttpResponse
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from .forms import MeetingRequest, OTPCaptchaVerification, Login
-from .models import Meeting
+from .models import Meeting, Employee
 # Create your views here.
 
 
@@ -95,11 +95,16 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 # Temp code, to be redirected to home page once login is successfull
-                return HttpResponse("Login Successful!")
-            print("Valid Form")
+                return redirect('manage')
     context = {'form': form}
     return render(request, 'login.html', context)
 
 
 def manage(request):
-    return render(request, 'manage.html')
+    if request.user.is_authenticated:
+        current_user = Employee.objects.get(user=request.user)
+        meetings = Meeting.objects.filter(requested_official=current_user)
+        context = {'user': current_user, 'meetings': meetings}
+        return render(request, 'manage.html', context)
+    else:
+        return redirect('login_user')
